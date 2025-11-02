@@ -3,10 +3,12 @@ import startServer from "./server/startServer.js";
 import router from "./router/router.js";
 import dotenv from "dotenv";
 import { initMQTT } from "./config/mqtt.js";
-
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
