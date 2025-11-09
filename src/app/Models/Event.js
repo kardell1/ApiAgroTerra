@@ -2,6 +2,13 @@ import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
 import Sensor from "./Sensor.js";
 
+// log de eventos
+// relacionado a un Sensor
+// seleccion del tipo de evento ocurrido (solo para las alertas)
+// dato recopilado
+// mensaje generado por el sistema
+// severidad de la alerta emitida
+// timestamps fecha creada la alerta
 const Event = sequelize.define("Event", {
   sensor_id: {
     type: DataTypes.INTEGER,
@@ -33,13 +40,6 @@ const Event = sequelize.define("Event", {
   data: {
     type: DataTypes.JSON,
     allowNull: true,
-    validate: {
-      isValidJson(value) {
-        if (value && typeof value !== "object") {
-          throw new Error("El campo data debe ser un objeto JSON válido.");
-        }
-      },
-    },
   },
   // mesansaje de alerta generado por el sistema
   message: {

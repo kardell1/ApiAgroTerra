@@ -2,8 +2,9 @@ import express from "express";
 import startServer from "./server/startServer.js";
 import router from "./router/router.js";
 import dotenv from "dotenv";
-import { initMQTT } from "./config/mqtt.js";
 import cors from "cors";
+import initMqttService from "./app/Services/MqttService.js";
+import { DeviceStore } from "./store/deviceStore.js";
 dotenv.config();
 
 const app = express();
@@ -22,7 +23,10 @@ startServer()
         `Servidor corriendo en http://localhost:${process.env.PORT} `,
       );
     });
-    initMQTT();
+    // inicializar la recuperacion de los sensores
+    DeviceStore.getDevices();
+    //iniicalizar la conexion al mqtt
+    initMqttService();
   })
   .catch((err) => {
     console.error("Error iniciando el servidor:", err);

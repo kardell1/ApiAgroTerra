@@ -31,7 +31,7 @@ const userStoreService = async (
   if (exist_email) {
     return {
       success: false,
-      msg: "El correo ya se encunetra registrado.",
+      msg: "El correo ya se encuentra registrado.",
       detail: [],
     };
   }

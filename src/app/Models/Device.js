@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
 import User from "./User.js";
-
 const Device = sequelize.define(
   "Device",
   {
@@ -43,9 +42,6 @@ const Device = sequelize.define(
     section: {
       type: DataTypes.STRING(30),
       allowNull: false,
-      unique: {
-        msg: "La sección debe ser única.",
-      },
       validate: {
         notEmpty: {
           msg: "La sección no puede estar vacía.",

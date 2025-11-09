@@ -1,7 +1,10 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
 import Device from "./Device.js";
-
+// declaramos que un device tiene n sensores
+// n sensores pertenecen a solo un device
+// definimos la clave de cada sensor para que sea registrado (clave unica para cada tipo de sensor)
+//
 const Sensor = sequelize.define("Sensor", {
   name: {
     type: DataTypes.STRING(50),
@@ -67,6 +70,16 @@ const Sensor = sequelize.define("Sensor", {
           ["temperature", "humidity", "pressure", "light", "motion", "custom"],
         ],
         msg: "Tipo de sensor no válido.",
+      },
+    },
+  },
+
+  code: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: "El codigo de sensor no puede estar vacío.",
       },
     },
   },

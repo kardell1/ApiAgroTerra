@@ -10,7 +10,7 @@ import applyAssociations from "../app/Models/Relations.js";
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
     applyAssociations();
     console.log("Conexion exitosa");
   } catch (error) {
