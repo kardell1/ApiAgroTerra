@@ -1,7 +1,7 @@
-const responseError = (res, message, status = 400, details = []) => {
+const responseError = (res, msg, status = 400, details = []) => {
   return res.status(status).json({
     success: false,
-    message,
+    msg,
     details,
   });
 };

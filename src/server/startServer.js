@@ -9,6 +9,7 @@ import applyAssociations from "../app/Models/Relations.js";
 
 const startServer = async () => {
   try {
+    // usa la liberia sequelize -> sequelize es un orm
     await sequelize.authenticate();
     await sequelize.sync();
     applyAssociations();
