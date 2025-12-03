@@ -1,7 +1,9 @@
+import { Op } from "sequelize";
 import sequelize from "../../config/database.js";
 import { DeviceStore } from "../../store/deviceStore.js";
 import Device from "../Models/Device.js";
 import Sensor from "../Models/Sensor.js";
+import Event from "../Models/Event.js";
 const deviceService = async (
   device_name,
   device_uuid,
@@ -77,4 +79,101 @@ const deviceService = async (
     };
   }
 };
-export { deviceService };
+
+const deviceDataService = async (months, uuid) => {
+  // 1. Buscar device
+  const found_device = await Device.findOne({
+    where: { uuid },
+    include: {
+      model: Sensor,
+      as: "sensors", // viene de las relaciones definidas
+      include: {
+        model: Event,
+        as: "events",
+        attributes: ["data", "message", "severity", "timestamp"], //seleccion de atributos especificos
+        where: {
+          timestamp: {
+            //seleccion de un tiempo para traer los datos
+            [Op.gte]: new Date(
+              new Date().setMonth(new Date().getMonth() - months),
+            ),
+          },
+        },
+        required: false, // para que traiga sensores aunque no tengan eventos
+      },
+    },
+  });
+
+  if (!found_device) {
+    return {
+      success: false,
+      msg: "El dispositivo no existe",
+      detail: [],
+    };
+  }
+
+  return {
+    success: true,
+    msg: "Datos obtenidos",
+    detail: found_device,
+  };
+};
+
+const infoForGrafic = async (months, uuid) => {
+  // 1. Buscar device
+  const found_device = await Device.findOne({
+    where: { uuid },
+    include: {
+      model: Sensor,
+      as: "sensors",
+      include: {
+        model: Event,
+        as: "events",
+        attributes: ["data", "message", "severity", "timestamp"],
+        where: {
+          timestamp: {
+            [Op.gte]: new Date(
+              new Date().setMonth(new Date().getMonth() - months),
+            ),
+          },
+        },
+        required: false,
+      },
+    },
+  });
+
+  if (!found_device) {
+    return {
+      success: false,
+      msg: "El dispositivo no existe",
+      detail: {},
+    };
+  }
+
+  // 2. Construir objeto para gráficos
+  const data = {};
+
+  found_device.sensors.forEach((sensor) => {
+    // inicializamos arrays vacíos
+    const dates = [];
+    const values = [];
+
+    sensor.events.forEach((event) => {
+      dates.push(event.timestamp.toISOString());
+      values.push(event.data ?? null);
+    });
+
+    data[sensor.name] = {
+      date: dates,
+      value: values,
+    };
+  });
+
+  return {
+    success: true,
+    msg: "Datos obtenidos para gráficos",
+    detail: data,
+  };
+};
+
+export { deviceService, deviceDataService, infoForGrafic };

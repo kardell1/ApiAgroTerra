@@ -40,14 +40,14 @@ const Device = sequelize.define(
     },
 
     section: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(200),
       allowNull: false,
       validate: {
         notEmpty: {
           msg: "La sección no puede estar vacía.",
         },
         len: {
-          args: [3, 30],
+          args: [3, 200],
           msg: "La sección debe tener entre 3 y 30 caracteres.",
         },
         is: {
@@ -77,6 +77,7 @@ const Device = sequelize.define(
   },
   {
     // Other model options go here
+    timestamps: false,
   },
 );
 console.log(Device === sequelize.models.Device); // true

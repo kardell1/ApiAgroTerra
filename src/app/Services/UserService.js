@@ -38,13 +38,13 @@ const userStoreService = async (
   try {
     const transaction = await sequelize.transaction();
     //hashear el password para agregarlo a la db
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
     //crear el recurso
     await User.create(
       {
         fullname: fullname,
         username: username,
-        password: hashedPassword,
+        password: password,
         cellphone: cellphone,
         email: email,
       },

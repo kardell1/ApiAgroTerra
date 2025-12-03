@@ -42,6 +42,7 @@ const User = sequelize.define(
   },
   {
     // Other model options go here
+    timestamps: false,
   },
 );
 console.log(User === sequelize.models.User); // true

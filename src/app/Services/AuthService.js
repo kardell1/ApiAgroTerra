@@ -11,8 +11,8 @@ const authService = async (username, password) => {
     };
   }
   // hash password
-  const isMatch = await bcrypt.compare(password, exist_user.password);
-
+  // const isMatch = await bcrypt.compare(password, exist_user.password);
+  const isMatch = password === exist_user.password;
   if (!isMatch) {
     return {
       success: false,

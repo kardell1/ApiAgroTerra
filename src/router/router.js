@@ -2,7 +2,11 @@ import express from "express";
 const router = express.Router();
 import authRequest from "../app/Http/Requests/AuthRequest.js";
 import { storeUser } from "../app/Http/Controllers/UserController.js";
-import { storeDevice } from "../app/Http/Controllers/DeviceController.js";
+import {
+  storeDevice,
+  dataDevice,
+  dataGrafic,
+} from "../app/Http/Controllers/DeviceController.js";
 import userCreateRequest from "../app/Http/Requests/UserCreateRequest.js";
 import { authenticateUser } from "../app/Http/Controllers/AuthController.js";
 import authMiddleware from "../app/Http/Middleware/AuthMiddleware.js";
@@ -28,6 +32,11 @@ router.get("/prueba", (req, res) => {
 // cuando sea un dato que deba guardarse entonces recien ponemos la busqueda de esos codigos de sensor , sino se los registra no se los guarda
 router.post("/sensor/create", deviceStoreRequest, storeDevice);
 
+// ruta para devolver los datos de las medidas del sensor segun una cama
+router.get("/sensor/historic", dataDevice);
+// ruta para devolver los datos para mostrar en el grafico
+
+router.get("/sensor/grafics", dataGrafic);
 export default router;
 //Nota -> para que funcione el postman debes agregar en
 // headers -> content-type application/json
