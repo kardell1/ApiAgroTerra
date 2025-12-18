@@ -5,6 +5,7 @@ const eventService = async (payload) => {
   console.log("dentro del eventService tenemos los siguientes datos:", payload);
 
   const [device_code, ...data] = payload.split(",");
+
   const find_device = await DeviceStore.getDevice(device_code);
 
   if (!find_device) return;

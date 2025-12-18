@@ -43,7 +43,7 @@ const deviceStoreRequest = [
     .withMessage("La sección es obligatoria.")
     .isLength({ min: 3, max: 30 })
     .withMessage("La sección debe tener entre 3 y 30 caracteres.")
-    .matches(/^[a-zA-Z0-9._-]+$/)
+    .matches(/^[a-zA-Z0-9\s._-]+$/)
     .withMessage(
       "La sección solo puede contener letras, números, puntos, guiones y guiones bajos.",
     ),

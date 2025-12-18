@@ -15,10 +15,6 @@ const Device = sequelize.define(
           args: [3, 50],
           msg: "El nombre debe tener entre 3 y 50 caracteres.",
         },
-        is: {
-          args: /^[a-zA-Z0-9\s._-]+$/i,
-          msg: "El nombre solo puede contener letras, números, espacios, puntos, guiones y guiones bajos.",
-        },
       },
     },
 
@@ -49,10 +45,6 @@ const Device = sequelize.define(
         len: {
           args: [3, 200],
           msg: "La sección debe tener entre 3 y 30 caracteres.",
-        },
-        is: {
-          args: /^[a-zA-Z0-9._-]+$/,
-          msg: "La sección solo puede contener letras, números, puntos, guiones y guiones bajos.",
         },
       },
     },

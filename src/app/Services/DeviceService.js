@@ -19,7 +19,7 @@ const deviceService = async (
   if (exist_device) {
     return {
       success: false,
-      msg: "El dispositivo ya se encunetra registrado.",
+      msg: "El dispositivo ya se encuentra registrado.",
       detail: [],
     };
   }
@@ -150,29 +150,29 @@ const infoForGrafic = async (months, uuid) => {
     };
   }
 
-  // 2. Construir objeto para gráficos
-  const data = {};
+  // ⬇️ NUEVO FORMATO: array de objetos
+  const formattedData = found_device.sensors.map((sensor) => {
+    const sortedEvents = sensor.events.sort(
+      (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
+    );
 
-  found_device.sensors.forEach((sensor) => {
-    // inicializamos arrays vacíos
-    const dates = [];
-    const values = [];
+    const formattedEvents = sortedEvents.map((event) => ({
+      date: event.timestamp.toISOString(),
+      value: Number(event.data ?? null),
+    }));
 
-    sensor.events.forEach((event) => {
-      dates.push(event.timestamp.toISOString());
-      values.push(event.data ?? null);
-    });
-
-    data[sensor.name] = {
-      date: dates,
-      value: values,
+    return {
+      code: sensor.code,
+      name: sensor.name,
+      min: sensor.minvalue,
+      max: sensor.maxvalue,
+      data: formattedEvents,
     };
   });
-
   return {
     success: true,
     msg: "Datos obtenidos para gráficos",
-    detail: data,
+    detail: formattedData,
   };
 };
 

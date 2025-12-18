@@ -6,6 +6,8 @@ dotenv.config();
 
 const initMqttService = () => {
   mqtt_client.on("message", async (topic, message) => {
+    // console.log(topic);
+    // console.log(message.toString());
     try {
       if (!topic.startsWith(process.env.MQTT_TOPIC_EVENT)) return;
       const payload = message.toString();

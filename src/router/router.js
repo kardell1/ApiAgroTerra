@@ -32,9 +32,10 @@ router.get("/prueba", (req, res) => {
 // cuando sea un dato que deba guardarse entonces recien ponemos la busqueda de esos codigos de sensor , sino se los registra no se los guarda
 router.post("/sensor/create", deviceStoreRequest, storeDevice);
 
+// dentro del auth , enviar los datos de los devices -> con sus sensores , que seria el minimo, maximo , type , codigo-sensor , la uuid-device
+
 // ruta para devolver los datos de las medidas del sensor segun una cama
 router.get("/sensor/historic", dataDevice);
-// ruta para devolver los datos para mostrar en el grafico
 
 router.get("/sensor/grafics", dataGrafic);
 export default router;
