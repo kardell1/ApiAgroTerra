@@ -19,7 +19,7 @@ dotenv.config();
 // es decirle :  dame una instancia de express, la cual se va llamar app
 const app = express();
 // la aplicacion que es app, va hacer uso de estas herramientas , que son : cors
-app.use(cors());
+app.use(cors({ origin: true }));
 // te ayuda a que el framework pueda entender el formato json
 app.use(express.json());
 // esto es para entender el http
