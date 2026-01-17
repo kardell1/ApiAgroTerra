@@ -8,16 +8,16 @@ import PersonalToken from "../app/Models/PersonalToken.js";
 import applyAssociations from "../app/Models/Relations.js";
 
 const startServer = async () => {
-  try {
-    // usa la liberia sequelize -> sequelize es un orm
-    await sequelize.authenticate();
-    await sequelize.sync();
-    applyAssociations();
-    console.log("Conexion exitosa");
-  } catch (error) {
-    console.error("Unable to start server:", error);
-    process.exit(1);
-  }
+     try {
+          // usa la liberia sequelize -> sequelize es un orm
+          await sequelize.authenticate();
+          await sequelize.sync();
+          applyAssociations();
+          console.log("Conexion exitosa");
+     } catch (error) {
+          console.error("Unable to start server:", error);
+          process.exit(1);
+     }
 };
 
 export default startServer;
